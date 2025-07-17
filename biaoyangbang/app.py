@@ -48,7 +48,7 @@ def index():
             left_margin = img.width * 0.1
             text_box_width = img.width * 0.8
             cell_width = text_box_width / cols
-            cell_height = font_size * 1.8  # 行距1.5倍
+            cell_height = font_size * 1.8  # 行距
 
             page_names = names[page * names_per_page : (page + 1) * names_per_page]
 
