@@ -48,7 +48,7 @@ def index():
             left_margin = img.width * 0.1
             text_box_width = img.width * 0.8
             cell_width = text_box_width / cols
-            cell_height = font_size * 1.8  # 行距
+            cell_height = font_size * 1.8  # 行距1.5倍
 
             page_names = names[page * names_per_page : (page + 1) * names_per_page]
 
@@ -89,4 +89,5 @@ def download(filename):
     return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))  # 从环境变量获取端口
+    app.run(host='0.0.0.0', port=port, debug=False)  # 监听所有网络接口，关闭调试模式
