@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <title>表扬榜生成器</title>
+    <style>
+        body {
+            font-family: "微软雅黑", sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea, input[type="number"], select {
+            width: 100%;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        img {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .image-block {
+            margin-bottom: 30px;
+        }
+        a.download-link {
+            display: inline-block;
+            margin-top: 6px;
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a.download-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>🎉 表扬榜生成器</h2>
+    <form method="post">
+        <label>输入姓名（每行一个）：</label>
+        <textarea name="names" rows="10" required>{{ names }}</textarea>
+
+        <label>字体大小（PPT 22号字 ≈ 29px）：</label>
+        <input type="number" name="font_size" value="{{ font_size }}" required>
+
+        <label>字体颜色：</label>
+        <select name="font_color">
+            <option value="black" {% if font_color == 'black' %}selected{% endif %}>黑色</option>
+            <option value="red" {% if font_color == 'red' %}selected{% endif %}>红色</option>
+            <option value="blue" {% if font_color == 'blue' %}selected{% endif %}>蓝色</option>
+            <option value="green" {% if font_color == 'green' %}selected{% endif %}>绿色</option>
+            <option value="white" {% if font_color == 'white' %}selected{% endif %}>白色</option>
+        </select>
+
+        <label>行数：</label>
+        <input type="number" name="rows" value="{{ rows }}" required>
+
+        <label>列数：</label>
+        <input type="number" name="cols" value="{{ cols }}" required>
+
+        <input type="submit" value="✅ 生成表扬榜图片">
+    </form>
+
+    {% if images %}
+        <hr>
+        <h3>🖼️ 生成结果（共{{ images|length }}页）：</h3>
+        {% for url, dl in images %}
+            <div class="image-block">
+                <img src="{{ url }}" alt="第{{ loop.index }}页生成图片">
+                <br>
+                <a class="download-link" href="{{ dl }}" download>📥 下载第 {{ loop.index }} 页图片</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
